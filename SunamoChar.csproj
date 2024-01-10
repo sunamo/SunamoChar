@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>24.1.7.1</Version>
+	  <Description>Methods for advanced working with char data type</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="SunamoDebugCollection" Version="24.1.7.1" />
+    <PackageReference Include="SunamoExceptions" Version="24.1.5.1" />
+    <PackageReference Include="SunamoI18N" Version="24.1.9.1" />
+    <PackageReference Include="SunamoValues" Version="24.1.9.2" />
+    <PackageReference Include="SunamoEnums" Version="24.1.7.2" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants);ASYNC</DefineConstants>
+  </PropertyGroup>
+</Project>
