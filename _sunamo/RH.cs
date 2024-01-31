@@ -1,6 +1,6 @@
-namespace SunamoChar._sunamo;
+//namespace SunamoChar._sunamo;
 
-internal class RH
-{
-    internal static Func<Type, List<string>> GetValuesOfConsts;
-}
+//public class RH
+//{
+//    public static Func<Type, List<string>> GetValuesOfConsts;
+//}

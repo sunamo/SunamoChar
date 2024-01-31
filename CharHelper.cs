@@ -1,5 +1,3 @@
-using SunamoI18N.Values;
-
 namespace SunamoChar;
 
 public partial class CharHelper
@@ -23,9 +21,9 @@ public partial class CharHelper
     {
         if (deli == null || deli.Count() == 0)
         {
-            ThrowEx.Custom(sess.i18n(XlfKeys.NoDelimiterDetermined));
+            ThrowEx.Custom("NoDelimiterDetermined");
         }
-        if (deli.Length == 1 && !CharHelper.IsUnicodeChar(UnicodeChars.Generic, deli[0]))
+        if (deli.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, deli[0]))
         {
             return text.Split(deli, stringSplitOptions).ToList();
         }
@@ -35,7 +33,7 @@ public partial class CharHelper
             List<char> generic = new List<char>();
             foreach (var item in deli)
             {
-                if (CharHelper.IsUnicodeChar(UnicodeChars.Generic, item))
+                if (IsUnicodeChar(UnicodeChars.Generic, item))
                 {
                     generic.Add(item);
                 }
@@ -46,8 +44,8 @@ public partial class CharHelper
             }
             if (generic.Count > 0)
             {
-                DebugCollection<string> splitted = new DebugCollection<string>();
-                splitted.dontAllow.Add(string.Empty);
+                List<string> splitted = new List<string>();
+
                 if (normal.Count > 0)
                 {
                     splitted.AddRange(text.Split(normal.ToArray(), stringSplitOptions).ToList());
@@ -60,8 +58,8 @@ public partial class CharHelper
                 foreach (var genericChar in generic)
                 {
                     predicate = AllCharsSE.ReturnRightPredicate(genericChar);
-                    DebugCollection<string> splittedPart = new DebugCollection<string>();
-                    splittedPart.dontAllow.Add(string.Empty);
+                    List<string> splittedPart = new List<string>();
+
                     for (int i = splitted.Count() - 1; i >= 0; i--)
                     {
                         var item2 = splitted[i];
@@ -210,11 +208,11 @@ public partial class CharHelper
         {
             return UnicodeChars.WhiteSpace;
         }
-        else if (CharHelper.IsSpecial(ch))
+        else if (IsSpecial(ch))
         {
             return UnicodeChars.Special;
         }
-        else if (CharHelper.IsGeneric(ch))
+        else if (IsGeneric(ch))
         {
             return UnicodeChars.Generic;
         }
@@ -250,9 +248,9 @@ public partial class CharHelper
             case UnicodeChars.WhiteSpace:
                 return char.IsWhiteSpace(c);
             case UnicodeChars.Special:
-                return CharHelper.IsSpecial(c);
+                return IsSpecial(c);
             case UnicodeChars.Generic:
-                return CharHelper.IsGeneric(c);
+                return IsGeneric(c);
             default:
                 throw new NotImplementedException(generic.ToString());
                 return false;
@@ -261,10 +259,10 @@ public partial class CharHelper
 
     public static bool IsSpecial(char c)
     {
-        bool v = CA.IsEqualToAnyElement(c, AllCharsSE.specialChars);
+        bool v = CAGSH.IsEqualToAnyElement(c, AllCharsSE.specialChars);
         if (!v)
         {
-            v = CA.IsEqualToAnyElement(c, AllCharsSE.specialChars2);
+            v = CAGSH.IsEqualToAnyElement(c, AllCharsSE.specialChars2);
         }
         return v;
     }
@@ -276,7 +274,7 @@ public partial class CharHelper
 
     public static bool IsGeneric(char c)
     {
-        return CA.IsEqualToAnyElement(c, AllCharsSE.generalChars);
+        return CAGSH.IsEqualToAnyElement(c, AllCharsSE.generalChars);
     }
 
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
