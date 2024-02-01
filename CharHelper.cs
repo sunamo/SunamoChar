@@ -1,5 +1,8 @@
 namespace SunamoChar;
 
+using SunamoChar._sunamo;
+
+
 public partial class CharHelper
 {
     public static List<string> SplitSpecial(string text, params char[] deli)
@@ -21,7 +24,7 @@ public partial class CharHelper
     {
         if (deli == null || deli.Count() == 0)
         {
-            ThrowEx.Custom("NoDelimiterDetermined");
+            throw new Exception("NoDelimiterDetermined");
         }
         if (deli.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, deli[0]))
         {
@@ -259,10 +262,10 @@ public partial class CharHelper
 
     public static bool IsSpecial(char c)
     {
-        bool v = CAGSH.IsEqualToAnyElement(c, AllCharsSE.specialChars);
+        bool v = AllCharsSE.specialChars.Contains(c);
         if (!v)
         {
-            v = CAGSH.IsEqualToAnyElement(c, AllCharsSE.specialChars2);
+            v = AllCharsSE.specialChars2.Contains(c);
         }
         return v;
     }
@@ -274,7 +277,7 @@ public partial class CharHelper
 
     public static bool IsGeneric(char c)
     {
-        return CAGSH.IsEqualToAnyElement(c, AllCharsSE.generalChars);
+        return AllCharsSE.generalChars.Contains(c);
     }
 
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
