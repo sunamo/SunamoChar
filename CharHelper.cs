@@ -56,7 +56,7 @@ public partial class CharHelper
                 Predicate<char> predicate;
                 foreach (var genericChar in generic)
                 {
-                    predicate = AllCharsSE.ReturnRightPredicate(genericChar);
+                    predicate = AllChars.ReturnRightPredicate(genericChar);
                     List<string> splittedPart = new List<string>();
 
                     for (int i = splitted.Count() - 1; i >= 0; i--)
@@ -116,17 +116,17 @@ public partial class CharHelper
 
     private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
     {
-        if (ch == AllCharsSE.lb || ch == AllCharsSE.rb)
+        if (ch == AllChars.lb || ch == AllChars.rb)
         {
             return false;
         }
 
-        if (ch == '\\' || ch == AllCharsSE.lcub || ch == AllCharsSE.rcub)
+        if (ch == '\\' || ch == AllChars.lcub || ch == AllChars.rcub)
         {
             return false;
         }
 
-        if (ch == AllCharsSE.dash)
+        if (ch == AllChars.dash)
         {
             return true;
         }
@@ -258,10 +258,10 @@ public partial class CharHelper
 
     public static bool IsSpecial(char c)
     {
-        bool v = AllCharsSE.specialChars.Contains(c);
+        bool v = AllChars.specialChars.Contains(c);
         if (!v)
         {
-            v = AllCharsSE.specialChars2.Contains(c);
+            v = AllChars.specialChars2.Contains(c);
         }
         return v;
     }
@@ -273,7 +273,7 @@ public partial class CharHelper
 
     public static bool IsGeneric(char c)
     {
-        return AllCharsSE.generalChars.Contains(c);
+        return AllChars.generalChars.Contains(c);
     }
 
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
