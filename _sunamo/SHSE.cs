@@ -1,4 +1,4 @@
-﻿namespace SunamoChar._sunamo;
+namespace SunamoChar;
 internal class SHSE
 {
     public static string TrimEnd(string name, string ext)

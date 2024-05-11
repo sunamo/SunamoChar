@@ -1,4 +1,4 @@
-﻿namespace SunamoChar._sunamo;
+namespace SunamoChar;
 internal class CASE
 {
     public static bool IsListStringWrappedInArray<T>(List<T> v2)

@@ -1,4 +1,4 @@
-namespace SunamoChar._sunamo;
+namespace SunamoChar;
 
 //internal delegate bool IsEqualToAnyElementDelegate<T>(T t, List<Char>);
 

@@ -1,4 +1,4 @@
-namespace SunamoChar.Enums;
+namespace SunamoChar;
 
 public enum UnicodeChars
 {

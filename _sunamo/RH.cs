@@ -1,4 +1,4 @@
-namespace SunamoChar._sunamo;
+namespace SunamoChar;
 
 //namespace SunamoChar._sunamo;
 
