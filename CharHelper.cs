@@ -1,4 +1,10 @@
-namespace SunamoChar;
+namespace
+#if SunamoStringTrim
+SunamoStringTrim
+#else
+SunamoChar
+#endif
+;
 public partial class CharHelper
 {
     public static List<string> SplitSpecial(string text, params char[] deli)
@@ -9,7 +15,6 @@ public partial class CharHelper
     {
         return SplitSpecial(StringSplitOptions.None, text, deli);
     }
-
     /// <summary>
     /// Use with general letters
     /// </summary>
@@ -44,7 +49,6 @@ public partial class CharHelper
             if (generic.Count > 0)
             {
                 List<string> splitted = new List<string>();
-
                 if (normal.Count > 0)
                 {
                     splitted.AddRange(text.Split(normal.ToArray(), stringSplitOptions).ToList());
@@ -58,7 +62,6 @@ public partial class CharHelper
                 {
                     predicate = AllChars.ReturnRightPredicate(genericChar);
                     List<string> splittedPart = new List<string>();
-
                     for (int i = splitted.Count() - 1; i >= 0; i--)
                     {
                         var item2 = splitted[i];
@@ -99,7 +102,6 @@ public partial class CharHelper
             }
         }
     }
-
     /// <summary>
     /// Return whether is whitespace or punctaction
     /// </summary>
@@ -111,33 +113,26 @@ public partial class CharHelper
         ch = s[dx];
         return IsSpecialChar(ch, ref s, dx, immediatelyRemove);
     }
-
-
-
     private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
     {
         if (ch == AllChars.lb || ch == AllChars.rb)
         {
             return false;
         }
-
         if (ch == '\\' || ch == AllChars.lcub || ch == AllChars.rcub)
         {
             return false;
         }
-
         if (ch == AllChars.dash)
         {
             return true;
         }
-
         if (char.IsWhiteSpace(ch))
         {
             if (immediatelyRemove && s != null)
             {
                 s = s.Remove(dx, 1);
             }
-
             return true;
         }
         if (char.IsPunctuation(ch))
@@ -150,7 +145,6 @@ public partial class CharHelper
         }
         return false;
     }
-
     public static List<UnicodeChars> TypesOfUnicodeChars(string s)
     {
         List<UnicodeChars> ch = new List<UnicodeChars>();
@@ -160,7 +154,6 @@ public partial class CharHelper
         }
         return ch.Distinct().ToList();
     }
-
     public static UnicodeChars IsUnicodeChar(char ch)
     {
         if (char.IsControl(ch))
@@ -219,7 +212,6 @@ public partial class CharHelper
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
     }
-
     public static bool IsUnicodeChar(UnicodeChars generic, char c)
     {
         switch (generic)
@@ -255,7 +247,6 @@ public partial class CharHelper
                 return false;
         }
     }
-
     public static bool IsSpecial(char c)
     {
         bool v = AllChars.specialChars.Contains(c);
@@ -265,17 +256,14 @@ public partial class CharHelper
         }
         return v;
     }
-
     public static string OnlyDigits(string v)
     {
         return OnlyAccepted(v, char.IsDigit);
     }
-
     public static bool IsGeneric(char c)
     {
         return AllChars.generalChars.Contains(c);
     }
-
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
     {
         StringBuilder sb = new StringBuilder();
@@ -287,7 +275,6 @@ public partial class CharHelper
             {
                 result = !result;
             }
-
             if (result)
             {
                 sb.Append(item);
@@ -295,7 +282,6 @@ public partial class CharHelper
         }
         return sb.ToString();
     }
-
     public static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
     {
         StringBuilder sb = new StringBuilder();
