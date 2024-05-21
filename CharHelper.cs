@@ -243,7 +243,7 @@ public partial class CharHelper
             case UnicodeChars.Generic:
                 return IsGeneric(c);
             default:
-                throw new NotImplementedException(generic.ToString());
+                ThrowEx.NotImplementedCase (generic.ToString());
                 return false;
         }
     }
