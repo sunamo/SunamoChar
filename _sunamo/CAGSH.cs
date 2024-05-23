@@ -1,10 +1,10 @@
 namespace SunamoChar;
 
-//internal delegate bool IsEqualToAnyElementDelegate<T>(T t, List<Char>);
+//public delegate bool IsEqualToAnyElementDelegate<T>(T t, List<Char>);
 
-internal class CAGSH
+public class CAGSH
 {
-    //internal static IsEqualToAnyElementDelegate<T> IsEqualToAnyElement;
+    //public static IsEqualToAnyElementDelegate<T> IsEqualToAnyElement;
 
     /// <summary>
     /// ContainsAnyFromElement - Contains string elements of list. Return List<string>
@@ -19,7 +19,7 @@ internal class CAGSH
     /// <typeparam name="T"></typeparam>
     /// <param name="p"></param>
     /// <param name="list"></param>
-    internal static bool IsEqualToAnyElement<T>(T p, IList<T> list)
+    public static bool IsEqualToAnyElement<T>(T p, IList<T> list)
     {
         foreach (T item in list)
         {
@@ -45,7 +45,7 @@ internal class CAGSH
     /// <param name="p"></param>
     /// <param name="prvky"></param>
     /// <returns></returns>
-    internal static bool IsEqualToAnyElement<T>(T p, params T[] prvky)
+    public static bool IsEqualToAnyElement<T>(T p, params T[] prvky)
     {
         return IsEqualToAnyElement(p, prvky.ToList());
     }

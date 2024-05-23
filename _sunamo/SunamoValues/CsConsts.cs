@@ -1,12 +1,12 @@
 namespace SunamoChar;
 
 
-internal class CsConsts
+public class CsConsts
 {
     #region For easy copy
-    internal const string esteemed = "V�en�/�";
-    internal const string dobryDen = "Dobr� den";
-    internal const string Zdravim = "Zdrav�m";
-    internal const string atSystemDot = "at System.";
+    public const string esteemed = "V�en�/�";
+    public const string dobryDen = "Dobr� den";
+    public const string Zdravim = "Zdrav�m";
+    public const string atSystemDot = "at System.";
     #endregion
 }
