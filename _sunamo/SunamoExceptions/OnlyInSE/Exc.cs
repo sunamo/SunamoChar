@@ -106,16 +106,7 @@ public class Exc
         if (dx != -1) st = st.Substring(dx);
         return st;
     }
-    /// <summary>
-    ///     Usage: GetStackTrace2
-    /// </summary>
-    /// <param name="v"></param>
-    /// <returns></returns>
-    private static List<string> GetLines(string v)
-    {
-        var l = v.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        return l;
-    }
+    
     #endregion
     #endregion
 }
