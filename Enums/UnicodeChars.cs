@@ -1,10 +1,3 @@
-namespace
-#if SunamoStringTrim
-SunamoStringTrim
-#else
-SunamoChar
-#endif
-;
 public enum UnicodeChars
 {
     #region char.Is*
