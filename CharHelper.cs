@@ -1,10 +1,3 @@
-namespace
-#if SunamoStringTrim
-SunamoStringTrim
-#else
-SunamoChar
-#endif
-;
 public partial class CharHelper
 {
     public static List<string> SplitSpecial(string text, params char[] deli)
