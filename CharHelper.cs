@@ -1,3 +1,5 @@
+
+namespace SunamoChar;
 public partial class CharHelper
 {
     public static List<string> SplitSpecial(string text, params char[] deli)

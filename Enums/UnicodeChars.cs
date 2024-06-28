@@ -1,3 +1,5 @@
+
+namespace SunamoChar;
 public enum UnicodeChars
 {
     #region char.Is*

@@ -1,3 +1,5 @@
+
+namespace SunamoChar;
 using System.Diagnostics;
 using System.Text;
 

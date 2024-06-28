@@ -1,3 +1,5 @@
+
+namespace SunamoChar;
 public class TranslateAble
 {
     
