@@ -1,4 +1,3 @@
-
 namespace SunamoChar;
 
 public class CharHelper
