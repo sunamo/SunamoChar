@@ -1,4 +1,4 @@
-namespace SunamoChar;
+namespace SunamoChar._sunamo.SunamoExceptions;
 internal class SHSE
 {
     internal static string TrimEnd(string name, string ext)
