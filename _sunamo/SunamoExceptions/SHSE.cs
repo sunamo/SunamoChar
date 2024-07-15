@@ -7,12 +7,12 @@ internal class SHSE
 
         return name;
     }
-    internal static List<string> SplitChar(string v1, params char[] v2)
+    internal static List<string> SplitCharMore(string v1, params char[] v2)
     {
         return v1.Split(v2).ToList();
     }
 
-    internal static List<string> Split(string s, params string[] dot)
+    internal static List<string> SplitMore(string s, params string[] dot)
     {
         return s.Split(dot, StringSplitOptions.RemoveEmptyEntries).ToList();
     }
