@@ -1,5 +1,6 @@
 namespace SunamoChar._sunamo.SunamoExceptions.InSunamoIsDerivedFrom;
-internal class CASE
+
+internal class CA
 {
     internal static bool IsListStringWrappedInArray<T>(List<T> v2)
     {
