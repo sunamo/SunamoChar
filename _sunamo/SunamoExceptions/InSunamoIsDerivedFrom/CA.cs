@@ -1,4 +1,4 @@
-//namespace SunamoChar._sunamo.SunamoExceptions.InSunamoIsDerivedFrom;
+namespace SunamoChar._sunamo.SunamoExceptions.InSunamoIsDerivedFrom;
 
 internal class CA
 {
