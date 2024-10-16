@@ -7,7 +7,7 @@ global using System.Text;
 global using System.Collections;
 global using System.IO;
 global using SunamoChar.Enums;
-global using SunamoChar._sunamo.SunamoValues;
+global using SunamoChar;
 global using SunamoChar._sunamo.SunamoExceptions;
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
@@ -15,3 +15,5 @@ global using System.Net;
 global using SunamoChar;
 global using SunamoChar._sunamo;
 global using SunamoChar._sunamo.SunamoStringGetLines;
+
+global using SunamoChar._sunamo.SunamoValues;

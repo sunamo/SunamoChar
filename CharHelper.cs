@@ -1,4 +1,7 @@
+using SunamoChar.Services;
+
 namespace SunamoChar;
+
 
 public class CharHelper
 {
@@ -39,9 +42,14 @@ public class CharHelper
             else
                 splitted.Add(text);
             Predicate<char> predicate;
+
+            GeneralCharService generalChar = new GeneralCharService();
+
             foreach (var genericChar in generic)
             {
-                predicate = AllChars.ReturnRightPredicate(genericChar);
+
+
+                predicate = generalChar.ReturnRightPredicate(genericChar);
                 var splittedPart = new List<string>();
                 for (var i = splitted.Count() - 1; i >= 0; i--)
                 {
@@ -93,9 +101,9 @@ public class CharHelper
 
     private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
     {
-        if (ch == AllChars.lb || ch == AllChars.rb) return false;
-        if (ch == '\\' || ch == AllChars.lcub || ch == AllChars.rcub) return false;
-        if (ch == AllChars.dash) return true;
+        if (ch == '(' || ch == ')') return false;
+        if (ch == '\\' || ch == '{' || ch == '}') return false;
+        if (ch == '-') return true;
         if (char.IsWhiteSpace(ch))
         {
             if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
@@ -188,8 +196,10 @@ public class CharHelper
 
     public static bool IsSpecial(char c)
     {
-        var v = AllChars.specialChars.Contains(c);
-        if (!v) v = AllChars.specialChars2.Contains(c);
+        SpecialCharsService specialChars = new();
+
+        var v = specialChars.specialChars.Contains(c);
+        if (!v) v = specialChars.specialChars2.Contains(c);
         return v;
     }
 
@@ -200,7 +210,8 @@ public class CharHelper
 
     public static bool IsGeneric(char c)
     {
-        return AllChars.generalChars.Contains(c);
+        GeneralCharService generalChar = new GeneralCharService();
+        return generalChar.generalChars.Contains(c);
     }
 
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
@@ -222,19 +233,19 @@ public class CharHelper
         var sb = new StringBuilder();
         //bool result = true;
         foreach (var item in v)
-        foreach (var item2 in isDigit)
-            if (item2.Invoke(item))
-            {
-                sb.Append(item);
-                break;
-            }
+            foreach (var item2 in isDigit)
+                if (item2.Invoke(item))
+                {
+                    sb.Append(item);
+                    break;
+                }
 
         return sb.ToString();
     }
 
-    public static string CharWhichIsNotContained(string item)
+    public static string CharWhichIsNotContained(Type typeAllChars, string item)
     {
-        var v = typeof(AllStrings).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+        var v = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
             .Select(x => (string)x.GetRawConstantValue())
             .ToList();

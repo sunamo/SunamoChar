@@ -1,5 +1,4 @@
 namespace SunamoChar._sunamo.SunamoValues;
-
 internal class CsConsts
 {
     #region For easy copy

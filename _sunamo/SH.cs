@@ -21,7 +21,7 @@ internal class SH
     internal static string NullToStringOrDefault(object n)
     {
         //return NullToStringOrDefault(n, null);
-        return n == null ? " " + Consts.nulled : AllStrings.space + n;
+        return n == null ? " " + "(null)" : "" + n;
     }
     internal static string JoinNL(List<string> l)
     {
