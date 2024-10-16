@@ -10,3 +10,4 @@ global using SunamoChar.Enums;
 global using SunamoChar._sunamo.SunamoExceptions;
 global using System.Diagnostics;
 global using System.Net;
+global using System.Diagnostics.CodeAnalysis;
