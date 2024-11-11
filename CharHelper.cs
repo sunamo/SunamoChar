@@ -1,7 +1,5 @@
-using SunamoChar.Services;
-
 namespace SunamoChar;
-
+using SunamoChar.Services;
 
 public class CharHelper
 {
