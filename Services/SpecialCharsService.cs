@@ -1,7 +1,7 @@
 namespace SunamoChar.Services;
 using System.Collections.Generic;
 
-internal class SpecialCharsService
+public class SpecialCharsService
 {
     public readonly List<char> specialChars = new(new[]
         { excl, commat, num, dollar, percnt, Hat, amp, ast, quest, lowbar, tilda });

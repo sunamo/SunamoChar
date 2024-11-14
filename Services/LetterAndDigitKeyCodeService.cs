@@ -1,7 +1,7 @@
 namespace SunamoChar.Services;
 using System.Collections.Generic;
 
-internal class LetterAndDigitKeyCodeService
+public class LetterAndDigitKeyCodeService
 {
     public readonly List<int> lowerKeyCodes = new(new[]
     {
