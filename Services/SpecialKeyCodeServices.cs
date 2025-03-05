@@ -1,5 +1,4 @@
 namespace SunamoChar.Services;
-using System.Collections.Generic;
 
 public class SpecialKeyCodeServices
 {
