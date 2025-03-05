@@ -1,5 +1,4 @@
 namespace SunamoChar;
-using SunamoChar.Services;
 
 public class CharHelper
 {
@@ -7,12 +6,10 @@ public class CharHelper
     {
         return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, deli);
     }
-
     public static List<string> SplitSpecialNone(string text, params char[] deli)
     {
         return SplitSpecial(StringSplitOptions.None, text, deli);
     }
-
     /// <summary>
     ///     Use with general letters
     /// </summary>
@@ -24,7 +21,6 @@ public class CharHelper
         if (deli == null || deli.Count() == 0) throw new Exception("NoDelimiterDetermined");
         if (deli.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, deli[0]))
             return text.Split(deli, stringSplitOptions).ToList();
-
         var normal = new List<char>();
         var generic = new List<char>();
         foreach (var item in deli)
@@ -40,13 +36,9 @@ public class CharHelper
             else
                 splitted.Add(text);
             Predicate<char> predicate;
-
             GeneralCharService generalChar = new GeneralCharService();
-
             foreach (var genericChar in generic)
             {
-
-
                 predicate = generalChar.ReturnRightPredicate(genericChar);
                 var splittedPart = new List<string>();
                 for (var i = splitted.Count() - 1; i >= 0; i--)
@@ -67,24 +59,19 @@ public class CharHelper
                                 sb.Clear();
                             }
                         }
-
                     var splittedPartCount = splittedPart.Count();
                     if (splittedPartCount > 1)
                     {
                         splitted.RemoveAt(i);
                         for (var y = splittedPartCount - 1; y >= 0; y--) splitted.Insert(i, splittedPart[y]);
                     }
-
                     splitted.Add(sb.ToString());
                 }
             }
-
             return splitted.ToList();
         }
-
         return text.Split(deli, stringSplitOptions).ToList();
     }
-
     /// <summary>
     ///     Return whether is whitespace or punctaction
     /// </summary>
@@ -96,7 +83,6 @@ public class CharHelper
         ch = s[dx];
         return IsSpecialChar(ch, ref s, dx, immediatelyRemove);
     }
-
     private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
     {
         if (ch == '(' || ch == ')') return false;
@@ -107,23 +93,19 @@ public class CharHelper
             if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
             return true;
         }
-
         if (char.IsPunctuation(ch))
         {
             if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
             return true;
         }
-
         return false;
     }
-
     public static List<UnicodeChars> TypesOfUnicodeChars(string s)
     {
         var ch = new List<UnicodeChars>();
         foreach (var item in s) ch.Add(IsUnicodeChar(item));
         return ch.Distinct().ToList();
     }
-
     public static UnicodeChars IsUnicodeChar(char ch)
     {
         if (char.IsControl(ch))
@@ -155,7 +137,6 @@ public class CharHelper
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
     }
-
     public static bool IsUnicodeChar(UnicodeChars generic, char c)
     {
         switch (generic)
@@ -191,27 +172,22 @@ public class CharHelper
                 return false;
         }
     }
-
     public static bool IsSpecial(char c)
     {
         SpecialCharsService specialChars = new();
-
         var v = specialChars.specialChars.Contains(c);
         if (!v) v = specialChars.specialChars2.Contains(c);
         return v;
     }
-
     public static string OnlyDigits(string v)
     {
         return OnlyAccepted(v, char.IsDigit);
     }
-
     public static bool IsGeneric(char c)
     {
         GeneralCharService generalChar = new GeneralCharService();
         return generalChar.generalChars.Contains(c);
     }
-
     public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
     {
         var sb = new StringBuilder();
@@ -222,10 +198,8 @@ public class CharHelper
             if (not) result = !result;
             if (result) sb.Append(item);
         }
-
         return sb.ToString();
     }
-
     public static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
     {
         var sb = new StringBuilder();
@@ -237,10 +211,8 @@ public class CharHelper
                     sb.Append(item);
                     break;
                 }
-
         return sb.ToString();
     }
-
     public static string CharWhichIsNotContained(Type typeAllChars, string item)
     {
         var v = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
