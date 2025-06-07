@@ -206,11 +206,14 @@ public class CharHelper
         //bool result = true;
         foreach (var item in v)
             foreach (var item2 in isDigit)
-                if (item2.Invoke(item))
+            {
+                var accepted = item2.Invoke(item);
+                if (accepted || (!accepted && not))
                 {
                     sb.Append(item);
                     break;
                 }
+            }
         return sb.ToString();
     }
     public static string CharWhichIsNotContained(Type typeAllChars, string item)
