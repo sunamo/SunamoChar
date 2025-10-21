@@ -1,3 +1,6 @@
+// EN: Variable names have been checked and replaced with self-descriptive names
+// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
+
 namespace SunamoChar;
 
 public class CharHelper
@@ -45,27 +48,27 @@ public class CharHelper
                 {
                     var item2 = splitted[i];
                     splittedPart.Clear();
-                    var sb = new StringBuilder();
+                    var stringBuilder = new StringBuilder();
                     foreach (var item in item2)
                         if (predicate.Invoke(item))
                         {
-                            sb.Append(item);
+                            stringBuilder.Append(item);
                         }
                         else
                         {
-                            if (sb.Length != 0)
+                            if (stringBuilder.Length != 0)
                             {
-                                splittedPart.Add(sb.ToString());
-                                sb.Clear();
+                                splittedPart.Add(stringBuilder.ToString());
+                                stringBuilder.Clear();
                             }
                         }
                     var splittedPartCount = splittedPart.Count();
                     if (splittedPartCount > 1)
                     {
                         splitted.RemoveAt(i);
-                        for (var y = splittedPartCount - 1; y >= 0; y--) splitted.Insert(i, splittedPart[y]);
+                        for (var yValue = splittedPartCount - 1; yValue >= 0; yValue--) splitted.Insert(i, splittedPart[yValue]);
                     }
-                    splitted.Add(sb.ToString());
+                    splitted.Add(stringBuilder.ToString());
                 }
             }
             return splitted.ToList();
@@ -78,32 +81,32 @@ public class CharHelper
     /// <param name="dx"></param>
     /// <param name="s"></param>
     /// <param name="ch"></param>
-    public static bool IsSpecialChar(int dx, ref string s, ref char ch, bool immediatelyRemove = false)
+    public static bool IsSpecialChar(int dx, ref string text, ref char ch, bool immediatelyRemove = false)
     {
-        ch = s[dx];
-        return IsSpecialChar(ch, ref s, dx, immediatelyRemove);
+        ch = text[dx];
+        return IsSpecialChar(ch, ref text, dx, immediatelyRemove);
     }
-    private static bool IsSpecialChar(char ch, ref string s, int dx = -1, bool immediatelyRemove = false)
+    private static bool IsSpecialChar(char ch, ref string text, int dx = -1, bool immediatelyRemove = false)
     {
         if (ch == '(' || ch == ')') return false;
         if (ch == '\\' || ch == '{' || ch == '}') return false;
         if (ch == '-') return true;
         if (char.IsWhiteSpace(ch))
         {
-            if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
+            if (immediatelyRemove && text != null) text = text.Remove(dx, 1);
             return true;
         }
         if (char.IsPunctuation(ch))
         {
-            if (immediatelyRemove && s != null) s = s.Remove(dx, 1);
+            if (immediatelyRemove && text != null) text = text.Remove(dx, 1);
             return true;
         }
         return false;
     }
-    public static List<UnicodeChars> TypesOfUnicodeChars(string s)
+    public static List<UnicodeChars> TypesOfUnicodeChars(string text)
     {
         var ch = new List<UnicodeChars>();
-        foreach (var item in s) ch.Add(IsUnicodeChar(item));
+        foreach (var item in text) ch.Add(IsUnicodeChar(item));
         return ch.Distinct().ToList();
     }
     public static UnicodeChars IsUnicodeChar(char ch)
@@ -137,92 +140,92 @@ public class CharHelper
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
     }
-    public static bool IsUnicodeChar(UnicodeChars generic, char c)
+    public static bool IsUnicodeChar(UnicodeChars generic, char character)
     {
         switch (generic)
         {
             case UnicodeChars.Control:
-                return char.IsControl(c);
+                return char.IsControl(character);
             case UnicodeChars.HighSurrogate:
-                return char.IsHighSurrogate(c);
+                return char.IsHighSurrogate(character);
             case UnicodeChars.Lower:
-                return char.IsLower(c);
+                return char.IsLower(character);
             case UnicodeChars.LowSurrogate:
-                return char.IsLowSurrogate(c);
+                return char.IsLowSurrogate(character);
             case UnicodeChars.Number:
-                return char.IsNumber(c);
+                return char.IsNumber(character);
             case UnicodeChars.Punctaction:
-                return char.IsPunctuation(c);
+                return char.IsPunctuation(character);
             case UnicodeChars.Separator:
-                return char.IsSeparator(c);
+                return char.IsSeparator(character);
             case UnicodeChars.Surrogate:
-                return char.IsSurrogate(c);
+                return char.IsSurrogate(character);
             case UnicodeChars.Symbol:
-                return char.IsSymbol(c);
+                return char.IsSymbol(character);
             case UnicodeChars.Upper:
-                return char.IsUpper(c);
+                return char.IsUpper(character);
             case UnicodeChars.WhiteSpace:
-                return char.IsWhiteSpace(c);
+                return char.IsWhiteSpace(character);
             case UnicodeChars.Special:
-                return IsSpecial(c);
+                return IsSpecial(character);
             case UnicodeChars.Generic:
-                return IsGeneric(c);
+                return IsGeneric(character);
             default:
                 ThrowEx.NotImplementedCase(generic.ToString());
                 return false;
         }
     }
-    public static bool IsSpecial(char c)
+    public static bool IsSpecial(char character)
     {
         SpecialCharsService specialChars = new();
-        var v = specialChars.specialChars.Contains(c);
-        if (!v) v = specialChars.specialChars2.Contains(c);
-        return v;
+        var value = specialChars.specialChars.Contains(character);
+        if (!value) value = specialChars.specialChars2.Contains(character);
+        return value;
     }
-    public static string OnlyDigits(string v)
+    public static string OnlyDigits(string value)
     {
-        return OnlyAccepted(v, char.IsDigit);
+        return OnlyAccepted(value, char.IsDigit);
     }
-    public static bool IsGeneric(char c)
+    public static bool IsGeneric(char character)
     {
         GeneralCharService generalChar = new GeneralCharService();
-        return generalChar.generalChars.Contains(c);
+        return generalChar.generalChars.Contains(character);
     }
-    public static string OnlyAccepted(string v, Func<char, bool> isDigit, bool not = false)
+    public static string OnlyAccepted(string value, Func<char, bool> isDigit, bool not = false)
     {
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         var result = false;
-        foreach (var item in v)
+        foreach (var item in value)
         {
             result = isDigit.Invoke(item);
             if (not) result = !result;
-            if (result) sb.Append(item);
+            if (result) stringBuilder.Append(item);
         }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
-    public static string OnlyAccepted(string v, List<Func<char, bool>> isDigit, bool not = false)
+    public static string OnlyAccepted(string value, List<Func<char, bool>> isDigit, bool not = false)
     {
-        var sb = new StringBuilder();
+        var stringBuilder = new StringBuilder();
         //bool result = true;
-        foreach (var item in v)
+        foreach (var item in value)
             foreach (var item2 in isDigit)
             {
                 var accepted = item2.Invoke(item);
                 if (accepted || (!accepted && not))
                 {
-                    sb.Append(item);
+                    stringBuilder.Append(item);
                     break;
                 }
             }
-        return sb.ToString();
+        return stringBuilder.ToString();
     }
     public static string CharWhichIsNotContained(Type typeAllChars, string item)
     {
-        var v = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+        var value = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
             .Select(x => (string)x.GetRawConstantValue())
             .ToList();
-        foreach (var item2 in v)
+        foreach (var item2 in value)
             if (!item.Contains(item2))
                 return item2;
         return null;
