@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 
@@ -14,8 +15,8 @@ internal sealed partial class Exceptions
     internal static Tuple<string, string, string> PlaceOfException(
 bool fillAlsoFirstTwo = true)
     {
-        StackTrace st = new();
-        var value = st.ToString();
+        StackTrace stackTrace = new();
+        var value = stackTrace.ToString();
         var lines = value.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
         lines.RemoveAt(0);
         var i = 0;
@@ -41,8 +42,8 @@ bool fillAlsoFirstTwo = true)
     }
     internal static void TypeAndMethodName(string lines, out string type, out string methodName)
     {
-        var s2 = lines.Split("at ")[1].Trim();
-        var text = s2.Split("(")[0];
+        var trimmedLine = lines.Split("at ")[1].Trim();
+        var text = trimmedLine.Split("(")[0];
         var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         methodName = parameter[^1];
         parameter.RemoveAt(parameter.Count - 1);
@@ -67,16 +68,16 @@ bool fillAlsoFirstTwo = true)
     #endregion
     internal static string? NotImplementedCase(string before, object notImplementedName)
     {
-        var fr = string.Empty;
+        var formattedInfo = string.Empty;
         if (notImplementedName != null)
         {
-            fr = " for ";
+            formattedInfo = " for ";
             if (notImplementedName.GetType() == typeof(Type))
-                fr += ((Type)notImplementedName).FullName;
+                formattedInfo += ((Type)notImplementedName).FullName;
             else
-                fr += notImplementedName.ToString();
+                formattedInfo += notImplementedName.ToString();
         }
-        return CheckBefore(before) + "Not implemented case" + fr + " . internal program error. Please contact developer" +
+        return CheckBefore(before) + "Not implemented case" + formattedInfo + " . internal program error. Please contact developer" +
         ".";
     }
 }

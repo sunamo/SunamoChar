@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoChar._sunamo.SunamoExceptions;
@@ -11,9 +12,9 @@ internal partial class ThrowEx
     #region Other
     internal static string FullNameOfExecutedCode()
     {
-        Tuple<string, string, string> placeOfExc = Exceptions.PlaceOfException();
-        string f = FullNameOfExecutedCode(placeOfExc.Item1, placeOfExc.Item2, true);
-        return f;
+        Tuple<string, string, string> placeOfException = Exceptions.PlaceOfException();
+        string fullName = FullNameOfExecutedCode(placeOfException.Item1, placeOfException.Item2, true);
+        return fullName;
     }
 
     static string FullNameOfExecutedCode(object type, string methodName, bool fromThrowEx = false)
@@ -29,9 +30,9 @@ internal partial class ThrowEx
             methodName = Exceptions.CallingMethod(depth);
         }
         string typeFullName;
-        if (type is Type type2)
+        if (type is Type typeInstance)
         {
-            typeFullName = type2.FullName ?? "Type cannot be get via type is Type type2";
+            typeFullName = typeInstance.FullName ?? "Type cannot be get via type is Type typeInstance";
         }
         else if (type is MethodBase method)
         {
@@ -44,8 +45,8 @@ internal partial class ThrowEx
         }
         else
         {
-            Type t = type.GetType();
-            typeFullName = t.FullName ?? "Type cannot be get via type.GetType()";
+            Type currentType = type.GetType();
+            typeFullName = currentType.FullName ?? "Type cannot be get via type.GetType()";
         }
         return string.Concat(typeFullName, ".", methodName);
     }
@@ -67,10 +68,10 @@ internal partial class ThrowEx
     #region For avoid FullNameOfExecutedCode
 
 
-    internal static bool ThrowIsNotNull<A>(Func<string, A, string?> f, A ex)
+    internal static bool ThrowIsNotNull<A>(Func<string, A, string?> exceptionFormatter, A argument)
     {
-        string? exc = f(FullNameOfExecutedCode(), ex);
-        return ThrowIsNotNull(exc);
+        string? exception = exceptionFormatter(FullNameOfExecutedCode(), argument);
+        return ThrowIsNotNull(exception);
     }
 
     #endregion

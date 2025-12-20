@@ -1,3 +1,4 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 
@@ -5,28 +6,28 @@ namespace SunamoChar;
 
 public class CharHelper
 {
-    public static List<string> SplitSpecial(string text, params char[] deli)
+    public static List<string> SplitSpecial(string text, params char[] delimiters)
     {
-        return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, deli);
+        return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, delimiters);
     }
-    public static List<string> SplitSpecialNone(string text, params char[] deli)
+    public static List<string> SplitSpecialNone(string text, params char[] delimiters)
     {
-        return SplitSpecial(StringSplitOptions.None, text, deli);
+        return SplitSpecial(StringSplitOptions.None, text, delimiters);
     }
     /// <summary>
     ///     Use with general letters
     /// </summary>
     /// <param name="stringSplitOptions"></param>
     /// <param name="text"></param>
-    /// <param name="deli"></param>
-    private static List<string> SplitSpecial(StringSplitOptions stringSplitOptions, string text, params char[] deli)
+    /// <param name="delimiters"></param>
+    private static List<string> SplitSpecial(StringSplitOptions stringSplitOptions, string text, params char[] delimiters)
     {
-        if (deli == null || deli.Count() == 0) throw new Exception("NoDelimiterDetermined");
-        if (deli.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, deli[0]))
-            return text.Split(deli, stringSplitOptions).ToList();
+        if (delimiters == null || delimiters.Count() == 0) throw new Exception("NoDelimiterDetermined");
+        if (delimiters.Length == 1 && !IsUnicodeChar(UnicodeChars.Generic, delimiters[0]))
+            return text.Split(delimiters, stringSplitOptions).ToList();
         var normal = new List<char>();
         var generic = new List<char>();
-        foreach (var item in deli)
+        foreach (var item in delimiters)
             if (IsUnicodeChar(UnicodeChars.Generic, item))
                 generic.Add(item);
             else
@@ -46,10 +47,10 @@ public class CharHelper
                 var splittedPart = new List<string>();
                 for (var i = splitted.Count() - 1; i >= 0; i--)
                 {
-                    var item2 = splitted[i];
+                    var part = splitted[i];
                     splittedPart.Clear();
                     var stringBuilder = new StringBuilder();
-                    foreach (var item in item2)
+                    foreach (var item in part)
                         if (predicate.Invoke(item))
                         {
                             stringBuilder.Append(item);
@@ -66,76 +67,76 @@ public class CharHelper
                     if (splittedPartCount > 1)
                     {
                         splitted.RemoveAt(i);
-                        for (var yValue = splittedPartCount - 1; yValue >= 0; yValue--) splitted.Insert(i, splittedPart[yValue]);
+                        for (var partIndex = splittedPartCount - 1; partIndex >= 0; partIndex--) splitted.Insert(i, splittedPart[partIndex]);
                     }
                     splitted.Add(stringBuilder.ToString());
                 }
             }
             return splitted.ToList();
         }
-        return text.Split(deli, stringSplitOptions).ToList();
+        return text.Split(delimiters, stringSplitOptions).ToList();
     }
     /// <summary>
     ///     Return whether is whitespace or punctaction
     /// </summary>
-    /// <param name="dx"></param>
+    /// <param name="index"></param>
     /// <param name="s"></param>
-    /// <param name="ch"></param>
-    public static bool IsSpecialChar(int dx, ref string text, ref char ch, bool immediatelyRemove = false)
+    /// <param name="character"></param>
+    public static bool IsSpecialChar(int index, ref string text, ref char character, bool immediatelyRemove = false)
     {
-        ch = text[dx];
-        return IsSpecialChar(ch, ref text, dx, immediatelyRemove);
+        character = text[index];
+        return IsSpecialChar(character, ref text, index, immediatelyRemove);
     }
-    private static bool IsSpecialChar(char ch, ref string text, int dx = -1, bool immediatelyRemove = false)
+    private static bool IsSpecialChar(char character, ref string text, int index = -1, bool immediatelyRemove = false)
     {
-        if (ch == '(' || ch == ')') return false;
-        if (ch == '\\' || ch == '{' || ch == '}') return false;
-        if (ch == '-') return true;
-        if (char.IsWhiteSpace(ch))
+        if (character == '(' || character == ')') return false;
+        if (character == '\\' || character == '{' || character == '}') return false;
+        if (character == '-') return true;
+        if (char.IsWhiteSpace(character))
         {
-            if (immediatelyRemove && text != null) text = text.Remove(dx, 1);
+            if (immediatelyRemove && text != null) text = text.Remove(index, 1);
             return true;
         }
-        if (char.IsPunctuation(ch))
+        if (char.IsPunctuation(character))
         {
-            if (immediatelyRemove && text != null) text = text.Remove(dx, 1);
+            if (immediatelyRemove && text != null) text = text.Remove(index, 1);
             return true;
         }
         return false;
     }
     public static List<UnicodeChars> TypesOfUnicodeChars(string text)
     {
-        var ch = new List<UnicodeChars>();
-        foreach (var item in text) ch.Add(IsUnicodeChar(item));
-        return ch.Distinct().ToList();
+        var unicodeCharTypes = new List<UnicodeChars>();
+        foreach (var item in text) unicodeCharTypes.Add(IsUnicodeChar(item));
+        return unicodeCharTypes.Distinct().ToList();
     }
-    public static UnicodeChars IsUnicodeChar(char ch)
+    public static UnicodeChars IsUnicodeChar(char character)
     {
-        if (char.IsControl(ch))
+        if (char.IsControl(character))
             return UnicodeChars.Control;
-        if (char.IsHighSurrogate(ch))
+        if (char.IsHighSurrogate(character))
             return UnicodeChars.HighSurrogate;
-        if (char.IsLower(ch))
+        if (char.IsLower(character))
             return UnicodeChars.Lower;
-        if (char.IsLowSurrogate(ch))
+        if (char.IsLowSurrogate(character))
             return UnicodeChars.LowSurrogate;
-        if (char.IsNumber(ch))
+        if (char.IsNumber(character))
             return UnicodeChars.Number;
-        if (char.IsPunctuation(ch))
+        if (char.IsPunctuation(character))
             return UnicodeChars.Punctaction;
-        if (char.IsSeparator(ch))
+        if (char.IsSeparator(character))
             return UnicodeChars.Separator;
-        if (char.IsSurrogate(ch))
+        if (char.IsSurrogate(character))
             return UnicodeChars.Surrogate;
-        if (char.IsSymbol(ch))
+        if (char.IsSymbol(character))
             return UnicodeChars.Symbol;
-        if (char.IsUpper(ch))
+        if (char.IsUpper(character))
             return UnicodeChars.Upper;
-        if (char.IsWhiteSpace(ch))
+        if (char.IsWhiteSpace(character))
             return UnicodeChars.WhiteSpace;
-        if (IsSpecial(ch))
+        if (IsSpecial(character))
             return UnicodeChars.Special;
-        if (IsGeneric(ch)) return UnicodeChars.Generic;
+        if (IsGeneric(character)) return UnicodeChars.Generic;
         //ThrowEx.NotImplementedCase(ch);
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
@@ -178,8 +179,8 @@ public class CharHelper
     public static bool IsSpecial(char character)
     {
         SpecialCharsService specialChars = new();
-        var value = specialChars.specialChars.Contains(character);
-        if (!value) value = specialChars.specialChars2.Contains(character);
+        var value = specialChars.SpecialChars.Contains(character);
+        if (!value) value = specialChars.SpecialChars2.Contains(character);
         return value;
     }
     public static string OnlyDigits(string value)
@@ -189,7 +190,7 @@ public class CharHelper
     public static bool IsGeneric(char character)
     {
         GeneralCharService generalChar = new GeneralCharService();
-        return generalChar.generalChars.Contains(character);
+        return generalChar.GeneralChars.Contains(character);
     }
     public static string OnlyAccepted(string value, Func<char, bool> isDigit, bool not = false)
     {
@@ -208,9 +209,9 @@ public class CharHelper
         var stringBuilder = new StringBuilder();
         //bool result = true;
         foreach (var item in value)
-            foreach (var item2 in isDigit)
+            foreach (var predicate in isDigit)
             {
-                var accepted = item2.Invoke(item);
+                var accepted = predicate.Invoke(item);
                 if (accepted || (!accepted && not))
                 {
                     stringBuilder.Append(item);
@@ -225,9 +226,9 @@ public class CharHelper
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
             .Select(x => (string)x.GetRawConstantValue())
             .ToList();
-        foreach (var item2 in value)
-            if (!item.Contains(item2))
-                return item2;
+        foreach (var constantValue in value)
+            if (!item.Contains(constantValue))
+                return constantValue;
         return null;
     }
 }

@@ -1,12 +1,13 @@
+// variables names: ok
 // EN: Variable names have been checked and replaced with self-descriptive names
 // CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 namespace SunamoChar.Services;
 
 public class SpecialCharsService
 {
-    public readonly List<char> specialChars = new(new[]
-        { excl, commat, num, dollar, percnt, Hat, amp, ast, quest, lowbar, tilda });
-    public readonly List<char> specialChars2 = new(new[]
+    public readonly List<char> SpecialChars = new(new[]
+        { excl, commat, num, dollar, percnt, hat, amp, ast, quest, lowbar, tilda });
+    public readonly List<char> SpecialChars2 = new(new[]
     {
         lq, rq, dash, la, ra,
         comma, period, colon, apos, rpar, sol, lt, gt, lcub, rcub, lsqb, verbar, semi, plus, rsqb,
@@ -15,16 +16,16 @@ public class SpecialCharsService
     /// <summary>
     ///     Used in enigma
     /// </summary>
-    public readonly List<char> specialCharsAll;
-    public readonly List<char> specialCharsWhite = new(new[] { space });
-    public readonly List<char> specialCharsNotEnigma = new(new[] { space160, copy });
+    public readonly List<char> SpecialCharsAll;
+    public readonly List<char> SpecialCharsWhite = new(new[] { space });
+    public readonly List<char> SpecialCharsNotEnigma = new(new[] { space160, copy });
     private const char la = '‘';
     private const char ra = '’';
     private const char comma = ',';
     private const char space = ' ';
     private static char space160 = (char)160;
     private const char dollar = '$';
-    private const char Hat = '^';
+    private const char hat = '^';
     private const char ast = '*';
     private const char quest = '?';
     private const char tilda = '~';
