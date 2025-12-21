@@ -1,7 +1,3 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-
 namespace SunamoChar;
 
 public class CharHelper
@@ -80,7 +76,7 @@ public class CharHelper
     ///     Return whether is whitespace or punctaction
     /// </summary>
     /// <param name="index"></param>
-    /// <param name="s"></param>
+    /// <param name="text"></param>
     /// <param name="character"></param>
     public static bool IsSpecialChar(int index, ref string text, ref char character, bool immediatelyRemove = false)
     {
@@ -179,9 +175,9 @@ public class CharHelper
     public static bool IsSpecial(char character)
     {
         SpecialCharsService specialChars = new();
-        var value = specialChars.SpecialChars.Contains(character);
-        if (!value) value = specialChars.SpecialChars2.Contains(character);
-        return value;
+        var isContained = specialChars.SpecialChars.Contains(character);
+        if (!isContained) isContained = specialChars.SpecialChars2.Contains(character);
+        return isContained;
     }
     public static string OnlyDigits(string value)
     {
@@ -192,24 +188,24 @@ public class CharHelper
         GeneralCharService generalChar = new GeneralCharService();
         return generalChar.GeneralChars.Contains(character);
     }
-    public static string OnlyAccepted(string value, Func<char, bool> isDigit, bool not = false)
+    public static string OnlyAccepted(string value, Func<char, bool> predicate, bool not = false)
     {
         var stringBuilder = new StringBuilder();
         var result = false;
         foreach (var item in value)
         {
-            result = isDigit.Invoke(item);
+            result = predicate.Invoke(item);
             if (not) result = !result;
             if (result) stringBuilder.Append(item);
         }
         return stringBuilder.ToString();
     }
-    public static string OnlyAccepted(string value, List<Func<char, bool>> isDigit, bool not = false)
+    public static string OnlyAccepted(string value, List<Func<char, bool>> predicates, bool not = false)
     {
         var stringBuilder = new StringBuilder();
         //bool result = true;
         foreach (var item in value)
-            foreach (var predicate in isDigit)
+            foreach (var predicate in predicates)
             {
                 var accepted = predicate.Invoke(item);
                 if (accepted || (!accepted && not))
@@ -220,14 +216,14 @@ public class CharHelper
             }
         return stringBuilder.ToString();
     }
-    public static string CharWhichIsNotContained(Type typeAllChars, string item)
+    public static string CharWhichIsNotContained(Type typeAllChars, string text)
     {
-        var value = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+        var constantValues = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
             .Select(x => (string)x.GetRawConstantValue())
             .ToList();
-        foreach (var constantValue in value)
-            if (!item.Contains(constantValue))
+        foreach (var constantValue in constantValues)
+            if (!text.Contains(constantValue))
                 return constantValue;
         return null;
     }

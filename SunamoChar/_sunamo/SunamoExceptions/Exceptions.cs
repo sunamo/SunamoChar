@@ -1,8 +1,5 @@
-// variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
-
 namespace SunamoChar._sunamo.SunamoExceptions;
+
 // © www.sunamo.cz. All Rights Reserved.
 internal sealed partial class Exceptions
 {
@@ -16,22 +13,22 @@ internal sealed partial class Exceptions
 bool fillAlsoFirstTwo = true)
     {
         StackTrace stackTrace = new();
-        var value = stackTrace.ToString();
-        var lines = value.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        var stackTraceString = stackTrace.ToString();
+        var lines = stackTraceString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
         lines.RemoveAt(0);
         var i = 0;
         string type = string.Empty;
         string methodName = string.Empty;
         for (; i < lines.Count; i++)
         {
-            var item = lines[i];
+            var line = lines[i];
             if (fillAlsoFirstTwo)
-                if (!item.StartsWith("   at ThrowEx"))
+                if (!line.StartsWith("   at ThrowEx"))
                 {
-                    TypeAndMethodName(item, out type, out methodName);
+                    TypeAndMethodName(line, out type, out methodName);
                     fillAlsoFirstTwo = false;
                 }
-            if (item.StartsWith("at System."))
+            if (line.StartsWith("at System."))
             {
                 lines.Add(string.Empty);
                 lines.Add(string.Empty);
@@ -40,19 +37,19 @@ bool fillAlsoFirstTwo = true)
         }
         return new Tuple<string, string, string>(type, methodName, string.Join(Environment.NewLine, lines));
     }
-    internal static void TypeAndMethodName(string lines, out string type, out string methodName)
+    internal static void TypeAndMethodName(string line, out string type, out string methodName)
     {
-        var trimmedLine = lines.Split("at ")[1].Trim();
-        var text = trimmedLine.Split("(")[0];
-        var parameter = text.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
-        methodName = parameter[^1];
-        parameter.RemoveAt(parameter.Count - 1);
-        type = string.Join(".", parameter);
+        var trimmedLine = line.Split("at ")[1].Trim();
+        var methodPath = trimmedLine.Split("(")[0];
+        var parts = methodPath.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+        methodName = parts[^1];
+        parts.RemoveAt(parts.Count - 1);
+        type = string.Join(".", parts);
     }
-    internal static string CallingMethod(int value = 1)
+    internal static string CallingMethod(int frameIndex = 1)
     {
         StackTrace stackTrace = new();
-        var methodBase = stackTrace.GetFrame(value)?.GetMethod();
+        var methodBase = stackTrace.GetFrame(frameIndex)?.GetMethod();
         if (methodBase == null)
         {
             return "Method name cannot be get";
@@ -63,8 +60,8 @@ bool fillAlsoFirstTwo = true)
     #endregion
 
     #region IsNullOrWhitespace
-    readonly static StringBuilder sbAdditionalInfoInner = new();
-    readonly static StringBuilder sbAdditionalInfo = new();
+    readonly static StringBuilder additionalInfoInner = new();
+    readonly static StringBuilder additionalInfo = new();
     #endregion
     internal static string? NotImplementedCase(string before, object notImplementedName)
     {
