@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoChar;
 
 public class CharHelper
@@ -78,24 +79,24 @@ public class CharHelper
     /// <param name="index"></param>
     /// <param name="text"></param>
     /// <param name="character"></param>
-    public static bool IsSpecialChar(int index, ref string text, ref char character, bool immediatelyRemove = false)
+    public static bool IsSpecialChar(int index, ref string text, ref char character, bool isImmediatelyRemoving = false)
     {
         character = text[index];
-        return IsSpecialChar(character, ref text, index, immediatelyRemove);
+        return IsSpecialChar(character, ref text, index, isImmediatelyRemoving);
     }
-    private static bool IsSpecialChar(char character, ref string text, int index = -1, bool immediatelyRemove = false)
+    private static bool IsSpecialChar(char character, ref string text, int index = -1, bool isImmediatelyRemoving = false)
     {
         if (character == '(' || character == ')') return false;
         if (character == '\\' || character == '{' || character == '}') return false;
         if (character == '-') return true;
         if (char.IsWhiteSpace(character))
         {
-            if (immediatelyRemove && text != null) text = text.Remove(index, 1);
+            if (isImmediatelyRemoving && text != null) text = text.Remove(index, 1);
             return true;
         }
         if (char.IsPunctuation(character))
         {
-            if (immediatelyRemove && text != null) text = text.Remove(index, 1);
+            if (isImmediatelyRemoving && text != null) text = text.Remove(index, 1);
             return true;
         }
         return false;
@@ -179,9 +180,9 @@ public class CharHelper
         if (!isContained) isContained = specialChars.SpecialChars2.Contains(character);
         return isContained;
     }
-    public static string OnlyDigits(string value)
+    public static string OnlyDigits(string text)
     {
-        return OnlyAccepted(value, char.IsDigit);
+        return OnlyAccepted(text, char.IsDigit);
     }
     public static bool IsGeneric(char character)
     {

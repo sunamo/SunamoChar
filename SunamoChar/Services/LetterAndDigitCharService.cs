@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoChar.Services;
 
 public class LetterAndDigitCharService
@@ -17,7 +18,7 @@ public class LetterAndDigitCharService
         'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
         'W', 'X', 'Y', 'Z'
     });
-    void Add()
+    public void Add()
     {
         AllCharsWithoutSpecial = new List<char>(LowerChars.Count + NumericChars.Count + UpperChars.Count);
         AllCharsWithoutSpecial.AddRange(LowerChars);

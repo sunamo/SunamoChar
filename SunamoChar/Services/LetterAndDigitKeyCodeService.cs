@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoChar.Services;
 
 public class LetterAndDigitKeyCodeService

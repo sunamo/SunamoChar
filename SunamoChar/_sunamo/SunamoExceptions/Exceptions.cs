@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoChar._sunamo.SunamoExceptions;
 
 // © www.sunamo.cz. All Rights Reserved.
@@ -10,7 +11,7 @@ internal sealed partial class Exceptions
     }
 
     internal static Tuple<string, string, string> PlaceOfException(
-bool fillAlsoFirstTwo = true)
+bool isFillFirstTwo = true)
     {
         StackTrace stackTrace = new();
         var stackTraceString = stackTrace.ToString();
@@ -22,11 +23,11 @@ bool fillAlsoFirstTwo = true)
         for (; i < lines.Count; i++)
         {
             var line = lines[i];
-            if (fillAlsoFirstTwo)
+            if (isFillFirstTwo)
                 if (!line.StartsWith("   at ThrowEx"))
                 {
                     TypeAndMethodName(line, out type, out methodName);
-                    fillAlsoFirstTwo = false;
+                    isFillFirstTwo = false;
                 }
             if (line.StartsWith("at System."))
             {
