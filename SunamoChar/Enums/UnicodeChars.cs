@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoChar.Enums;
 
 public enum UnicodeChars
