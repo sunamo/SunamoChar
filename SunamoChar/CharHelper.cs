@@ -1,11 +1,20 @@
 namespace SunamoChar;
 
+/// <summary>
+/// Helper class for character operations including Unicode character detection and string manipulation
+/// </summary>
 public class CharHelper
 {
+    /// <summary>
+    /// Splits text by special delimiters, removing empty entries
+    /// </summary>
     public static List<string> SplitSpecial(string text, params char[] delimiters)
     {
         return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, delimiters);
     }
+    /// <summary>
+    /// Splits text by special delimiters, keeping empty entries
+    /// </summary>
     public static List<string> SplitSpecialNone(string text, params char[] delimiters)
     {
         return SplitSpecial(StringSplitOptions.None, text, delimiters);
@@ -13,9 +22,9 @@ public class CharHelper
     /// <summary>
     ///     Use with general letters
     /// </summary>
-    /// <param name="stringSplitOptions"></param>
-    /// <param name="text"></param>
-    /// <param name="delimiters"></param>
+    /// <param name="stringSplitOptions">Options for splitting the string (remove empty entries or keep them).</param>
+    /// <param name="text">The text to split.</param>
+    /// <param name="delimiters">Characters to use as delimiters.</param>
     private static List<string> SplitSpecial(StringSplitOptions stringSplitOptions, string text, params char[] delimiters)
     {
         if (delimiters == null || delimiters.Count() == 0) throw new Exception("NoDelimiterDetermined");
@@ -36,10 +45,10 @@ public class CharHelper
             else
                 splitted.Add(text);
             Predicate<char> predicate;
-            GeneralCharService generalChar = new GeneralCharService();
+            GeneralCharService generalCharService = new GeneralCharService();
             foreach (var genericChar in generic)
             {
-                predicate = generalChar.ReturnRightPredicate(genericChar);
+                predicate = generalCharService.ReturnRightPredicate(genericChar);
                 var splittedPart = new List<string>();
                 for (var i = splitted.Count() - 1; i >= 0; i--)
                 {
@@ -75,14 +84,23 @@ public class CharHelper
     /// <summary>
     ///     Return whether is whitespace or punctaction
     /// </summary>
-    /// <param name="index"></param>
-    /// <param name="text"></param>
-    /// <param name="character"></param>
+    /// <param name="index">Index of the character to check in the text.</param>
+    /// <param name="text">The text containing the character.</param>
+    /// <param name="character">Output parameter for the character at the specified index.</param>
+    /// <param name="isImmediatelyRemoving">Whether to immediately remove the character from text if it is special.</param>
     public static bool IsSpecialChar(int index, ref string text, ref char character, bool isImmediatelyRemoving = false)
     {
         character = text[index];
         return IsSpecialChar(character, ref text, index, isImmediatelyRemoving);
     }
+    /// <summary>
+    /// Checks if a character is a special character (whitespace or punctuation, excluding certain characters)
+    /// </summary>
+    /// <param name="character">The character to check.</param>
+    /// <param name="text">The text containing the character (for optional removal).</param>
+    /// <param name="index">Index of the character in text (for optional removal).</param>
+    /// <param name="isImmediatelyRemoving">Whether to immediately remove the character from text if it is special.</param>
+    /// <returns>True if the character is a special character, false otherwise.</returns>
     private static bool IsSpecialChar(char character, ref string text, int index = -1, bool isImmediatelyRemoving = false)
     {
         if (character == '(' || character == ')') return false;
@@ -100,12 +118,18 @@ public class CharHelper
         }
         return false;
     }
+    /// <summary>
+    /// Returns list of distinct Unicode character types found in text
+    /// </summary>
     public static List<UnicodeChars> TypesOfUnicodeChars(string text)
     {
         var unicodeCharTypes = new List<UnicodeChars>();
         foreach (var item in text) unicodeCharTypes.Add(IsUnicodeChar(item));
         return unicodeCharTypes.Distinct().ToList();
     }
+    /// <summary>
+    /// Determines the Unicode character type of a character
+    /// </summary>
     public static UnicodeChars IsUnicodeChar(char character)
     {
         if (char.IsControl(character))
@@ -137,9 +161,15 @@ public class CharHelper
         // Still was throwing NotImplementedCase for 㣯 => Special. not all chars catch all ifs
         return UnicodeChars.Special;
     }
-    public static bool IsUnicodeChar(UnicodeChars generic, char character)
+    /// <summary>
+    /// Checks if a character matches the specified Unicode character type
+    /// </summary>
+    /// <param name="unicodeCharType">The Unicode character type to check against.</param>
+    /// <param name="character">The character to check.</param>
+    /// <returns>True if the character matches the specified type, false otherwise.</returns>
+    public static bool IsUnicodeChar(UnicodeChars unicodeCharType, char character)
     {
-        switch (generic)
+        switch (unicodeCharType)
         {
             case UnicodeChars.Control:
                 return char.IsControl(character);
@@ -168,47 +198,61 @@ public class CharHelper
             case UnicodeChars.Generic:
                 return IsGeneric(character);
             default:
-                ThrowEx.NotImplementedCase(generic.ToString());
+                ThrowEx.NotImplementedCase(unicodeCharType.ToString());
                 return false;
         }
     }
+    /// <summary>
+    /// Checks if a character is a special character
+    /// </summary>
     public static bool IsSpecial(char character)
     {
-        SpecialCharsService specialChars = new();
-        var isContained = specialChars.SpecialChars.Contains(character);
-        if (!isContained) isContained = specialChars.SpecialChars2.Contains(character);
+        SpecialCharsService specialCharsService = new();
+        var isContained = specialCharsService.SpecialChars.Contains(character);
+        if (!isContained) isContained = specialCharsService.SpecialChars2.Contains(character);
         return isContained;
     }
+    /// <summary>
+    /// Returns only digit characters from text
+    /// </summary>
     public static string OnlyDigits(string text)
     {
         return OnlyAccepted(text, char.IsDigit);
     }
+    /// <summary>
+    /// Checks if a character is a generic character
+    /// </summary>
     public static bool IsGeneric(char character)
     {
-        GeneralCharService generalChar = new GeneralCharService();
-        return generalChar.GeneralChars.Contains(character);
+        GeneralCharService generalCharService = new GeneralCharService();
+        return generalCharService.GeneralChars.Contains(character);
     }
-    public static string OnlyAccepted(string value, Func<char, bool> predicate, bool not = false)
+    /// <summary>
+    /// Returns only characters that match the predicate
+    /// </summary>
+    public static string OnlyAccepted(string text, Func<char, bool> predicate, bool isNegating = false)
     {
         var stringBuilder = new StringBuilder();
         var result = false;
-        foreach (var item in value)
+        foreach (var item in text)
         {
             result = predicate.Invoke(item);
-            if (not) result = !result;
+            if (isNegating) result = !result;
             if (result) stringBuilder.Append(item);
         }
         return stringBuilder.ToString();
     }
-    public static string OnlyAccepted(string value, List<Func<char, bool>> predicates, bool not = false)
+    /// <summary>
+    /// Returns only characters that match any of the predicates
+    /// </summary>
+    public static string OnlyAccepted(string text, List<Func<char, bool>> predicates, bool isNegating = false)
     {
         var stringBuilder = new StringBuilder();
-        //bool result = true;
-        foreach (var item in value)
+        foreach (var item in text)
             foreach (var predicate in predicates)
             {
                 var accepted = predicate.Invoke(item);
-                if (accepted || (!accepted && not))
+                if (accepted || (!accepted && isNegating))
                 {
                     stringBuilder.Append(item);
                     break;
@@ -216,14 +260,18 @@ public class CharHelper
             }
         return stringBuilder.ToString();
     }
-    public static string CharWhichIsNotContained(Type typeAllChars, string text)
+    /// <summary>
+    /// Finds a character constant from type that is not contained in text
+    /// </summary>
+    public static string? CharWhichIsNotContained(Type typeAllChars, string text)
     {
         var constantValues = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(string))
-            .Select(x => (string)x.GetRawConstantValue())
+            .Select(x => x.GetRawConstantValue() as string)
+            .Where(x => x != null)
             .ToList();
         foreach (var constantValue in constantValues)
-            if (!text.Contains(constantValue))
+            if (!text.Contains(constantValue!))
                 return constantValue;
         return null;
     }

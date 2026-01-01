@@ -1,16 +1,27 @@
 namespace SunamoChar.Services;
 
+/// <summary>
+/// Service for handling general character operations
+/// </summary>
 public class GeneralCharService
 {
-    static char notNumber = (char)9;
-    public readonly List<char> GeneralChars = new List<char>(new[] { notNumber });
-    public Predicate<char> ReturnRightPredicate(char genericChar)
+    private static readonly char tabCharacter = (char)9;
+    /// <summary>
+    /// List of general characters
+    /// </summary>
+    public List<char> GeneralChars { get; } = new List<char>(new[] { tabCharacter });
+    /// <summary>
+    /// Returns the appropriate predicate for a generic character
+    /// </summary>
+    /// <param name="character">The character to get the predicate for.</param>
+    /// <returns>A predicate function for testing characters of the same type.</returns>
+    public Predicate<char> ReturnRightPredicate(char character)
     {
-        Predicate<char> predicate = null;
-        if (genericChar == notNumber)
-            predicate = char.IsNumber;
+        if (character == tabCharacter)
+            return char.IsNumber;
         else
             ThrowEx.NotImplementedCase(GeneralChars);
-        return predicate;
+
+        throw new InvalidOperationException("Predicate not found for generic character");
     }
 }
