@@ -1,3 +1,4 @@
+// variables names: ok
 namespace SunamoChar._sunamo.SunamoValues;
 
 // variables names: ok
