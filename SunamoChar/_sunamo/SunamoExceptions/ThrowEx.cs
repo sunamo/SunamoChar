@@ -1,4 +1,3 @@
-// variables names: ok
 namespace SunamoChar._sunamo.SunamoExceptions;
 
 // variables names: ok
