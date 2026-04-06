@@ -26,7 +26,7 @@ bool isFillFirstTwo = true)
         var stackTraceString = stackTrace.ToString();
         var lines = stackTraceString.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
         lines.RemoveAt(0);
-        string type = string.Empty;
+        string typeName = string.Empty;
         string methodName = string.Empty;
         for (var i = 0; i < lines.Count; i++)
         {
@@ -34,7 +34,7 @@ bool isFillFirstTwo = true)
             if (isFillFirstTwo)
                 if (!line.StartsWith("   at ThrowEx"))
                 {
-                    TypeAndMethodName(line, out type, out methodName);
+                    TypeAndMethodName(line, out typeName, out methodName);
                     isFillFirstTwo = false;
                 }
             if (line.StartsWith("at System."))
@@ -44,22 +44,22 @@ bool isFillFirstTwo = true)
                 break;
             }
         }
-        return new Tuple<string, string, string>(type, methodName, string.Join(Environment.NewLine, lines));
+        return new Tuple<string, string, string>(typeName, methodName, string.Join(Environment.NewLine, lines));
     }
     /// <summary>
     /// Extracts type name and method name from a stack trace line.
     /// </summary>
     /// <param name="line">A single line from the stack trace.</param>
-    /// <param name="type">Output parameter for the extracted type name.</param>
+    /// <param name="typeName">Output parameter for the extracted type name.</param>
     /// <param name="methodName">Output parameter for the extracted method name.</param>
-    internal static void TypeAndMethodName(string line, out string type, out string methodName)
+    internal static void TypeAndMethodName(string line, out string typeName, out string methodName)
     {
         var trimmedLine = line.Split("at ")[1].Trim();
         var methodPath = trimmedLine.Split("(")[0];
         var parts = methodPath.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries).ToList();
         methodName = parts[^1];
         parts.RemoveAt(parts.Count - 1);
-        type = string.Join(".", parts);
+        typeName = string.Join(".", parts);
     }
     /// <summary>
     /// Gets the name of the calling method from the stack trace.
