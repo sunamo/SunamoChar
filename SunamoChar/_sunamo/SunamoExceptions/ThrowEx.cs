@@ -1,8 +1,6 @@
 namespace SunamoChar._sunamo.SunamoExceptions;
 
 // variables names: ok
-// EN: Variable names have been checked and replaced with self-descriptive names
-// CZ: Názvy proměnných byly zkontrolovány a nahrazeny samopopisnými názvy
 internal partial class ThrowEx
 {
 
@@ -33,21 +31,21 @@ internal partial class ThrowEx
         string typeFullName;
         if (type is Type typeInstance)
         {
-            typeFullName = typeInstance.FullName ?? "Type cannot be get via type is Type typeInstance";
+            typeFullName = typeInstance.FullName ?? "Type cannot be retrieved via type is Type typeInstance";
         }
         else if (type is MethodBase method)
         {
-            typeFullName = method.ReflectedType?.FullName ?? "Type cannot be get via type is MethodBase method";
+            typeFullName = method.ReflectedType?.FullName ?? "Type cannot be retrieved via type is MethodBase method";
             methodName = method.Name;
         }
         else if (type is string)
         {
-            typeFullName = type.ToString() ?? "Type cannot be get via type is string";
+            typeFullName = type.ToString() ?? "Type cannot be retrieved via type is string";
         }
         else
         {
             Type currentType = type.GetType();
-            typeFullName = currentType.FullName ?? "Type cannot be get via type.GetType()";
+            typeFullName = currentType.FullName ?? "Type cannot be retrieved via type.GetType()";
         }
         return string.Concat(typeFullName, ".", methodName);
     }
