@@ -1,6 +1,6 @@
 # SunamoChar
 
-Methods for advanced working with char data type
+Methods for advanced working with the char data type including Unicode character detection, classification, and string manipulation.
 
 ## Overview
 
@@ -10,23 +10,21 @@ SunamoChar is part of the Sunamo package ecosystem, providing modular, platform-
 
 ### Key Classes
 
-- **CharHelper**
-- **GeneralCharService**
-- **LetterAndDigitCharService**
-- **LetterAndDigitKeyCodeService**
-- **SpecialCharsService**
-- **SpecialKeyCodeServices**
-- **WhitespaceCharService**
+- **CharHelper** - Main helper class for character operations
+- **GeneralCharService** - Service for handling general character operations
+- **LetterAndDigitCharService** - Service providing letter and digit character lists
+- **LetterAndDigitKeyCodeService** - Service providing letter and digit key codes
+- **SpecialCharsService** - Service providing special character definitions
+- **SpecialKeyCodeServices** - Service providing special character key codes
+- **WhitespaceCharService** - Service for handling whitespace characters
 
 ### Key Methods
 
-- `SplitSpecial()`
-- `SplitSpecialNone()`
-- `IsSpecialChar()`
-- `TypesOfUnicodeChars()`
-- `IsUnicodeChar()`
-- `ReturnRightPredicate()`
-- `ConvertWhiteSpaceCodesToChars()`
+- `CharHelper.SplitSpecial()` - Splits text by special delimiters including Unicode generic characters
+- `CharHelper.IsSpecialChar()` - Checks if a character is whitespace or punctuation
+- `CharHelper.IsUnicodeChar()` - Classifies a character into Unicode character type categories
+- `CharHelper.OnlyAccepted()` - Filters text to keep only characters matching a predicate
+- `CharHelper.OnlyDigits()` - Extracts only digit characters from text
 
 ## Installation
 
@@ -36,15 +34,13 @@ dotnet add package SunamoChar
 
 ## Dependencies
 
-- **Microsoft.Extensions.Logging.Abstractions** (v9.0.3)
+- **Microsoft.Extensions.Logging.Abstractions**
 
 ## Package Information
 
 - **Package Name**: SunamoChar
-- **Version**: 25.6.7.1
-- **Target Framework**: net9.0
+- **Target Frameworks**: net10.0;net9.0;net8.0
 - **Category**: Platform-Independent NuGet Package
-- **Source Files**: 13
 
 ## Related Packages
 
@@ -52,4 +48,4 @@ This package is part of the Sunamo package ecosystem. For more information about
 
 ## License
 
-See the repository root for license information.
+MIT

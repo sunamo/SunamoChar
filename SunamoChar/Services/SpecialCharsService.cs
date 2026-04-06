@@ -9,18 +9,18 @@ public class SpecialCharsService
     /// Primary list of special characters
     /// </summary>
     public List<char> SpecialChars { get; } = new(new[]
-        { excl, commat, num, dollar, percnt, hat, amp, ast, quest, lowbar, tilda });
+        { exclamation, atSign, hash, dollar, percent, caret, ampersand, asterisk, questionMark, underscore, tilde });
     /// <summary>
     /// Secondary list of special characters
     /// </summary>
     public List<char> SpecialChars2 { get; } = new(new[]
     {
-        lq, rq, dash, la, ra,
-        comma, period, colon, apos, rpar, sol, lt, gt, lcub, rcub, lsqb, verbar, semi, plus, rsqb,
-        ndash, slash
+        leftQuote, rightQuote, dash, leftSingleQuote, rightSingleQuote,
+        comma, period, colon, apostrophe, rightParenthesis, solidus, lessThan, greaterThan, leftCurlyBrace, rightCurlyBrace, leftSquareBracket, verticalBar, semicolon, plus, rightSquareBracket,
+        enDash
     });
     /// <summary>
-    ///     Used in enigma
+    /// Combined list of all special characters
     /// </summary>
     public List<char>? SpecialCharsAll { get; set; }
     /// <summary>
@@ -30,45 +30,40 @@ public class SpecialCharsService
     /// <summary>
     /// Special characters not used in enigma
     /// </summary>
-    public List<char> SpecialCharsNotEnigma { get; } = new(new[] { nonBreakingSpace, copy });
-    private const char la = '\u2018';
-    private const char ra = '\u2019';
+    public List<char> SpecialCharsNotEnigma { get; } = new(new[] { nonBreakingSpace, copyright });
+    private const char leftSingleQuote = '\u2018';
+    private const char rightSingleQuote = '\u2019';
     private const char comma = ',';
     private const char space = ' ';
     private static readonly char nonBreakingSpace = (char)160;
     private const char dollar = '$';
-    private const char hat = '^';
-    private const char ast = '*';
-    private const char quest = '?';
-    private const char tilda = '~';
+    private const char caret = '^';
+    private const char asterisk = '*';
+    private const char questionMark = '?';
+    private const char tilde = '~';
     private const char period = '.';
     private const char colon = ':';
-    private const char excl = '!';
-    private const char apos = '\'';
-    private const char rpar = ')';
-    private const char sol = '/';
-    private const char lowbar = '_';
-    private const char lt = '<';
-    private const char gt = '>';
-    private const char amp = '&';
-    private const char lcub = '{';
-    private const char rcub = '}';
-    private const char lsqb = '[';
-    private const char verbar = '|';
-    private const char semi = ';';
-    private const char commat = '@';
+    private const char exclamation = '!';
+    private const char apostrophe = '\'';
+    private const char rightParenthesis = ')';
+    private const char solidus = '/';
+    private const char underscore = '_';
+    private const char lessThan = '<';
+    private const char greaterThan = '>';
+    private const char ampersand = '&';
+    private const char leftCurlyBrace = '{';
+    private const char rightCurlyBrace = '}';
+    private const char leftSquareBracket = '[';
+    private const char verticalBar = '|';
+    private const char semicolon = ';';
+    private const char atSign = '@';
     private const char plus = '+';
-    private const char rsqb = ']';
-    private const char num = '#';
-    private const char percnt = '%';
-    private const char ndash = '–';
-    private const char copy = '©';
-    #region MyRegion
-    private const char lq = '"';
-    private const char rq = '"';
-    #region Names here must be the same as in Consts
+    private const char rightSquareBracket = ']';
+    private const char hash = '#';
+    private const char percent = '%';
+    private const char enDash = '–';
+    private const char copyright = '©';
+    private const char leftQuote = '\u201C';
+    private const char rightQuote = '\u201D';
     private const char dash = '-';
-    #endregion
-    private const char slash = '/';
-    #endregion
 }

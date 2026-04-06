@@ -17,14 +17,11 @@ public enum UnicodeChars
     /// <summary>Numeric character</summary>
     Number,
     /// <summary>Punctuation character</summary>
-    Punctaction,
+    Punctuation,
     /// <summary>Separator character</summary>
     Separator,
     /// <summary>Surrogate character</summary>
     Surrogate,
-
-    //char.IsSurrogatePair(low, right) - pair is formed by low and high
-    //IsSurrogatePair,
     /// <summary>Symbol character</summary>
     Symbol,
     /// <summary>Uppercase letter</summary>
