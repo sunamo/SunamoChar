@@ -1,5 +1,10 @@
 # SunamoChar
 
+## Short description
+
+Metody pro pokročilou práci s typem char, včetně detekce a klasifikace znaků Unicode a úprav řetězců.
+
+
 Methods for advanced working with the char data type including Unicode character detection, classification, and string manipulation.
 
 ## Overview
