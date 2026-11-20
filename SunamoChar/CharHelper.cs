@@ -1,12 +1,27 @@
 namespace SunamoChar;
 
+/// <summary>
+/// Represents the char helper type.
+/// </summary>
 public class CharHelper
 {
+    /// <summary>
+    /// Split special.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <param name="delimiters">The delimiters.</param>
+    /// <returns>The split special result.</returns>
     public static List<string> SplitSpecial(string text, params char[] delimiters)
     {
         return SplitSpecial(StringSplitOptions.RemoveEmptyEntries, text, delimiters);
     }
 
+    /// <summary>
+    /// Split special none.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <param name="delimiters">The delimiters.</param>
+    /// <returns>The split special none result.</returns>
     public static List<string> SplitSpecialNone(string text, params char[] delimiters)
     {
         return SplitSpecial(StringSplitOptions.None, text, delimiters);
@@ -69,6 +84,14 @@ public class CharHelper
         return text.Split(delimiters, stringSplitOptions).ToList();
     }
 
+    /// <summary>
+    /// Is special char.
+    /// </summary>
+    /// <param name="index">The index.</param>
+    /// <param name="text">The text.</param>
+    /// <param name="character">The character.</param>
+    /// <param name="isImmediatelyRemoving">The is immediately removing.</param>
+    /// <returns>The is special char result.</returns>
     public static bool IsSpecialChar(int index, ref string text, ref char character, bool isImmediatelyRemoving = false)
     {
         character = text[index];
@@ -93,6 +116,11 @@ public class CharHelper
         return false;
     }
 
+    /// <summary>
+    /// Types of unicode chars.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>The types of unicode chars result.</returns>
     public static List<UnicodeChars> TypesOfUnicodeChars(string text)
     {
         var unicodeCharTypes = new List<UnicodeChars>();
@@ -100,6 +128,11 @@ public class CharHelper
         return unicodeCharTypes.Distinct().ToList();
     }
 
+    /// <summary>
+    /// Is unicode char.
+    /// </summary>
+    /// <param name="character">The character.</param>
+    /// <returns>The is unicode char result.</returns>
     public static UnicodeChars IsUnicodeChar(char character)
     {
         if (char.IsControl(character))
@@ -130,6 +163,12 @@ public class CharHelper
         return UnicodeChars.Special;
     }
 
+    /// <summary>
+    /// Is unicode char.
+    /// </summary>
+    /// <param name="unicodeCharType">The unicode char type.</param>
+    /// <param name="character">The character.</param>
+    /// <returns>The is unicode char result.</returns>
     public static bool IsUnicodeChar(UnicodeChars unicodeCharType, char character)
     {
         switch (unicodeCharType)
@@ -166,6 +205,11 @@ public class CharHelper
         }
     }
 
+    /// <summary>
+    /// Is special.
+    /// </summary>
+    /// <param name="character">The character.</param>
+    /// <returns>The is special result.</returns>
     public static bool IsSpecial(char character)
     {
         SpecialCharsService specialCharsService = new();
@@ -174,17 +218,34 @@ public class CharHelper
         return isContained;
     }
 
+    /// <summary>
+    /// Only digits.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <returns>The only digits result.</returns>
     public static string OnlyDigits(string text)
     {
         return OnlyAccepted(text, char.IsDigit);
     }
 
+    /// <summary>
+    /// Is generic.
+    /// </summary>
+    /// <param name="character">The character.</param>
+    /// <returns>The is generic result.</returns>
     public static bool IsGeneric(char character)
     {
         GeneralCharService generalCharService = new();
         return generalCharService.GeneralChars.Contains(character);
     }
 
+    /// <summary>
+    /// Only accepted.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <param name="predicate">The predicate.</param>
+    /// <param name="isNegating">The is negating.</param>
+    /// <returns>The only accepted result.</returns>
     public static string OnlyAccepted(string text, Func<char, bool> predicate, bool isNegating = false)
     {
         var stringBuilder = new StringBuilder();
@@ -198,6 +259,13 @@ public class CharHelper
         return stringBuilder.ToString();
     }
 
+    /// <summary>
+    /// Only accepted.
+    /// </summary>
+    /// <param name="text">The text.</param>
+    /// <param name="predicates">The predicates.</param>
+    /// <param name="isNegating">The is negating.</param>
+    /// <returns>The only accepted result.</returns>
     public static string OnlyAccepted(string text, List<Func<char, bool>> predicates, bool isNegating = false)
     {
         var stringBuilder = new StringBuilder();
@@ -214,6 +282,12 @@ public class CharHelper
         return stringBuilder.ToString();
     }
 
+    /// <summary>
+    /// Char which is not contained.
+    /// </summary>
+    /// <param name="typeAllChars">The type all chars.</param>
+    /// <param name="text">The text.</param>
+    /// <returns>The char which is not contained result.</returns>
     public static string? CharWhichIsNotContained(Type typeAllChars, string text)
     {
         var constantValues = typeAllChars.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)

@@ -1,17 +1,35 @@
 namespace SunamoChar.Services;
 
+/// <summary>
+/// Represents the special chars service type.
+/// </summary>
 public class SpecialCharsService
 {
+    /// <summary>
+    /// Gets the special chars.
+    /// </summary>
     public List<char> SpecialChars { get; } = new(new[]
         { exclamation, atSign, hash, dollar, percent, caret, ampersand, asterisk, questionMark, underscore, tilde });
+    /// <summary>
+    /// Gets the special chars 2.
+    /// </summary>
     public List<char> SpecialChars2 { get; } = new(new[]
     {
         leftQuote, rightQuote, dash, leftSingleQuote, rightSingleQuote,
         comma, period, colon, apostrophe, rightParenthesis, solidus, lessThan, greaterThan, leftCurlyBrace, rightCurlyBrace, leftSquareBracket, verticalBar, semicolon, plus, rightSquareBracket,
         enDash
     });
+    /// <summary>
+    /// Gets or sets the special chars all.
+    /// </summary>
     public List<char>? SpecialCharsAll { get; set; }
+    /// <summary>
+    /// Gets the special chars white.
+    /// </summary>
     public List<char> SpecialCharsWhite { get; } = new(new[] { space });
+    /// <summary>
+    /// Gets the special chars not enigma.
+    /// </summary>
     public List<char> SpecialCharsNotEnigma { get; } = new(new[] { nonBreakingSpace, copyright });
     private const char leftSingleQuote = '‘';
     private const char rightSingleQuote = '’';
